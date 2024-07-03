@@ -16,9 +16,9 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: true }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div x-data="{ expand:false }" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -35,6 +35,51 @@ new class extends Component
                     </x-nav-link>
                 </div>
             </div>
+
+        <div x-data="{ show:true,white: true, where: false, checkIn: false, checkOut: false, guests: false }" x-on:click.outside="show = true; expand = false" class="flex w-2/3 justify-center">
+            <div x-transition:enter.scale.20 x-show="show" x-on:click="show = false; expand = true" class="flex shrink-0 items-center border border-gray-300 px-2 rounded-full my-2 hover:cursor-pointer">
+                <div x-on:click="where = true; white = false" class="px-4 border-r font-bold">Anywhere</div>
+                <div x-on:click="checkIn = true; white = false" class="px-4 border-r font-bold">Date</div>
+                <div x-on:click="guests = true; white = false"class="px-4 text-gray-400">Guests</div>
+                <div class="px-4">Q</div>
+            </div>
+
+            <div x-transition:enter.scale.20 class="flex w-full" x-show="expand">
+
+                <div x-on:click="white = false" :class="white ? 'bg-white' : 'bg-gray-200'" class="flex items-center border border-gray-300 rounded-full hover:cursor-pointer w-full shadow-xl">
+
+                    <div x-on:click.outside="where = false" x-on:click="where = true" :class="where ? ' bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="focus-within:hover:bg-white  hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+                        <div>
+                            <div class="text-xs px-4 text-gray-800">Where</div>
+                            <div class="text-sm px-4 text-gray-400">Search destinations</div>
+                        </div>
+                    </div>
+
+                    <div x-on:click.outside="checkIn = false" x-on:click="checkIn = true" :class="checkIn ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+                        <div>
+                            <div class="text-xs px-4 text-gray-800">Check in</div>
+                            <div class="text-sm px-4 text-gray-400">Add dates</div>
+                        </div>
+                    </div>
+                    <div x-on:click.outside="checkOut = false" x-on:click="checkOut = true" :class="checkOut ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+                        <div>
+                            <div class="text-xs px-4 text-gray-800">Check out</div>
+                            <div class="text-sm px-4 text-gray-400">Add dates</div>
+                        </div>
+                    </div>
+                    <div x-on:click.outside="guests = false" x-on:click="guests = true" :class="guests ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+                        <div>
+                            <div class="text-xs px-4 text-gray-800">Who</div>
+                            <div class="text-sm px-4 text-gray-400">Add guests</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
