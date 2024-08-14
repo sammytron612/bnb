@@ -36,10 +36,12 @@ new class extends Component
                 </div>
             </div>
 
-        <div x-data="{ show:true,white: true, where: false, checkIn: false, checkOut: false, guests: false }" x-on:click.outside="show = true; expand = false" class="flex w-2/3 justify-center">
+        <div x-data="{ adults:0, children:0, pets:0, dates:'When', show:true,white: true, where: false, checkIn: false, checkOut: false, guests: false }" x-on:click.outside="show = true; expand = false" class="flex w-2/3 justify-center">
             <div x-transition:enter.scale.20 x-show="show" x-on:click="show = false; expand = true" class="flex shrink-0 items-center border border-gray-300 px-2 rounded-full my-2 hover:cursor-pointer">
+
                 <div x-on:click="where = true; white = false" class="px-4 border-r font-bold">Anywhere</div>
-                <div x-on:click="checkIn = true; white = false" class="px-4 border-r font-bold">Date</div>
+
+                <div x-text="dates" x-on:click="checkIn = true; white = false; document.getElementById('dates').focus()" class="px-4 border-r font-bold"></div>
                 <div x-on:click="guests = true; white = false"class="px-4 text-gray-400">Guests</div>
                 <div class="px-4">Q</div>
             </div>
@@ -48,29 +50,23 @@ new class extends Component
 
                 <div x-on:click="white = false" :class="white ? 'bg-white' : 'bg-gray-200'" class="flex items-center border border-gray-300 rounded-full hover:cursor-pointer w-full shadow-xl">
 
-                    <div x-on:click.outside="where = false" x-on:click="where = true" :class="where ? ' bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="focus-within:hover:bg-white  hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
-                        <div>
-                            <div class="text-xs px-4 text-gray-800">Where</div>
-                            <div class="text-sm px-4 text-gray-400">Search destinations</div>
+                    <div x-on:click.outside="where = false;" x-on:click="where = true; " :class="where ? 'bg-white shadow-xl hover:bg-white' : 'group hover:bg-gray-300'" class="hover:bg-gray-300  hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+                        <div class="group">
+                            <div class="text-xs px-4 text-gray-800  text-left">Where</div>
+                            <div class="text-sm px-4 text-gray-400 ">@livewire('Search.search', ['active', ])</div>
                         </div>
                     </div>
 
-                    <div x-on:click.outside="checkIn = false" x-on:click="checkIn = true" :class="checkIn ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
-                        <div>
-                            <div class="text-xs px-4 text-gray-800">Check in</div>
-                            <div class="text-sm px-4 text-gray-400">Add dates</div>
-                        </div>
+                    <div x-on:click.outside="checkIn = false" x-on:click="checkIn = true;" :class="checkIn ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="group hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+                        <x-calendarFrom>
+                        </x-calendarFrom>
                     </div>
-                    <div x-on:click.outside="checkOut = false" x-on:click="checkOut = true" :class="checkOut ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
+
+                    <div x-on:click.outside="guests = false" x-on:click="guests = true;" :class="guests ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
                         <div>
-                            <div class="text-xs px-4 text-gray-800">Check out</div>
-                            <div class="text-sm px-4 text-gray-400">Add dates</div>
-                        </div>
-                    </div>
-                    <div x-on:click.outside="guests = false" x-on:click="guests = true" :class="guests ? 'bg-white shadow-xl hover:bg-white' : 'hover:bg-gray-300'" class="hover:rounded-full w-2/6 rounded-full flex items-center justify-center h-full  hover:cursor-pointer">
-                        <div>
-                            <div class="text-xs px-4 text-gray-800">Who</div>
-                            <div class="text-sm px-4 text-gray-400">Add guests</div>
+                            <div class="text-center text-xs px-4 text-gray-800">Who</div>
+                            <div class="text-center text-sm px-4 text-gray-400">Add guests</div>
+                            <x-guests></x-guests>
                         </div>
                     </div>
 
